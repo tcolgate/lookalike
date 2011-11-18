@@ -1,3 +1,4 @@
 lookalikee is a cacti plugin for searching for graphs that 
 look similar to a graph that you are currently viewing.
-
+It is loosely based on the techniques used in the SAX time
+series indexing suite.
