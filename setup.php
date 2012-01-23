@@ -183,9 +183,9 @@ function lookalikee_graph_button($data) {
 
 	if (lookalikee_authorized()){
 		$local_graph_id = $data[1]['local_graph_id'];
-        $rras = get_associated_rras($local_graph_id);
-		$tip = "'<div class=\'lookalikee\'><a href=''></a>$rras</div>";
-		print "<img border='0' id='lklk" . $local_graph_id . "' style='padding:3px;' src='" . $config['url_path'] . "plugins/lookalikee/images/lookalikee.gif' onMouseOver=\"Tip($tip)\" onMouseOut='UnTip()'><br>";
+        	$rras = get_associated_rras($local_graph_id);
+		$tip = "'<div class=\'lookalikee\'><a href='http://slashdot.org'>$rras</a></div>";
+		print "<img border='0' id='lklk" . $local_graph_id . "' style='padding:3px;' src='" . $config['url_path'] . "plugins/lookalikee/lookalikee.gif' onMouseOver=\"Tip($tip)\" onMouseOut='UnTip()'><br>";
 	}
 }
 
