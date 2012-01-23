@@ -144,14 +144,14 @@ function lookalikee_config_settings () {
 		"lookalikee_binary" => array(
 			"friendly_name" => "Lookalikee executable",
 			"description" => "This gives the size of the gnerated PAA hash",
-			"method" => "dirpath",
+			"method" => "filepath",
 			"default" => "/var/www/cacti/plugins/lookalikee/bin/lookalikee",
 			"max_length" => "255",
 			),
 		"lookalikee_filtersize" => array(
 			"friendly_name" => "Filter Size",
 			"description" => "This gives the size of the gnerated PAA hash",
-			"method" => "dirpath",
+			"method" => "textbox",
 			"default" => "10",
 			"max_length" => "255",
 			"size" => "60"
@@ -183,9 +183,10 @@ function lookalikee_graph_button($data) {
 
 	if (lookalikee_authorized()){
 		$local_graph_id = $data[1]['local_graph_id'];
-        	$rras = get_associated_rras($local_graph_id);
-		$tip = "'<div class=\'lookalikee\'><a href='http://slashdot.org'>$rras</a></div>";
-		print "<img border='0' id='lklk" . $local_graph_id . "' style='padding:3px;' src='" . $config['url_path'] . "plugins/lookalikee/lookalikee.gif' onMouseOver=\"Tip($tip)\" onMouseOut='UnTip()'><br>";
+#                var_dump($_POST);
+		print "<a href='" . $config['url_path'] . "plugins/lookalikee/lookalikee.php?local_graph_id=" . $local_graph_id . "'>";
+		print "<img alt='Find similar graphs' border='0' style='padding:3px;' src='" . $config['url_path'] . "plugins/lookalikee/lookalikee.gif'>";
+		print "</a><br>";
 	}
 }
 
