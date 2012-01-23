@@ -141,6 +141,13 @@ function lookalikee_config_settings () {
 #			"default" => "1",
 #			"array" => array(1 => "Standard Deviation", 2=> "Variance Based w/Outliers Removed")
 #			),
+		"lookalikee_binary" => array(
+			"friendly_name" => "Lookalikee executable",
+			"description" => "This gives the size of the gnerated PAA hash",
+			"method" => "dirpath",
+			"default" => "/var/www/cacti/plugins/lookalikee/bin/lookalikee",
+			"max_length" => "255",
+			),
 		"lookalikee_filtersize" => array(
 			"friendly_name" => "Filter Size",
 			"description" => "This gives the size of the gnerated PAA hash",
