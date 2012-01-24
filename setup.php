@@ -101,7 +101,7 @@ function lookalikee_setup_table_new () {
 
 function lookalikee_top_graph_header_tabs () {
 	global $config;
-	#echo '<script language="JavaScript" type="text/javascript" src="' . $config['url_path'] . 'plugins/lookalikee/wz_tooltip.js"></script>';
+	echo '<script language="JavaScript" type="text/javascript" src="' . $config['url_path'] . 'plugins/lookalikee/wz_tooltip.js"></script>';
 	echo '<div class="lookalikee" id="lookalikee" style="width:auto;overflow:hidden;z-index:1010;visibility:hidden;position:absolute;top:0px;left:0px;"></div>';
 }
 
@@ -194,8 +194,6 @@ function lookalikee_graph_button($data) {
 			$graph_start = $graph_end - db_fetch_cell("SELECT timespan FROM rra WHERE id=" . $rraid);
                 };
 
-                print("$rraid $graph_start $graph_end <br>");
-
 		$dss = db_fetch_assoc("
 				SELECT DISTINCT data_template_rrd.data_source_name AS dsname,
 						data_template_rrd.local_data_id AS rrdid,
@@ -213,9 +211,14 @@ function lookalikee_graph_button($data) {
 			");
                 #var_dump($dss);
 
-		print "<a href='" . $config['url_path'] . "plugins/lookalikee/lookalikee.php?local_graph_id=" . $local_graph_id . "&graph_start=" . $graph_start . "&graph_end=" . $graph_end . "'>";
-		print "<img alt='Find similar graphs' border='0' style='padding:3px;' src='" . $config['url_path'] . "plugins/lookalikee/lookalikee.gif'>";
-		print "</a><br>";
+                $menu = "";
+                foreach ($dss as $ds){  
+ 			$menu = $menu . "<a href=" . $config['url_path'] . "plugins/lookalikee/lookalikee.php?local_graph_id=" . $local_graph_id . "&graph_start=" . $graph_start . "&graph_end=" . $graph_end . "&rrdid=" . $ds['rrdid'] . "&dsname=" . $ds['dsname'] . ">" . $ds['dsname'] . "</a><br>";
+		};
+                $tip = "'<div class=\'lookalikee\'>" . $menu . "</div>', FIX, [this, 18, -18], STICKY, true, BORDERWIDTH, 0, BGCOLOR, '#F1F1F1', CLICKCLOSE, true, CLICKSTICKY, true, SHADOW, true, PADDING, 0, TITLE, 'Find Similar Graphs', TITLEFONTSIZE, '6pt', TITLEBGCOLOR, '#6D88AD', DURATION, -10000";
+
+		print "<img alt='Find graphs similar to...' border='0' id='lklk" . $local_graph_id . "' style='padding:3px;' src='" . $config['url_path'] . "plugins/lookalikee/lookalikee.gif' onMouseOver=\"Tip($tip)\" onMouseOut='UnTip()'><br>";
+
 	}
 }
 
