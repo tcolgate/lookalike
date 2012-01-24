@@ -184,15 +184,31 @@ function lookalikee_graph_button($data) {
 	if (lookalikee_authorized()){
 		$local_graph_id = $data[1]['local_graph_id'];
 		$rraid = $data[1]['rra'];
-                $graph_end = 0;
-                $graph_start = 0;
-                if($rraid == 0){
+
+                if(isset($_GET['graph_end'])){
+		  $graph_end = $_GET['graph_end'];
+		} else {
+                  if($rraid == 0){
                 	$graph_end = get_current_graph_end();
-                	$graph_start = get_current_graph_start();
-                } else {
+                  } else {
 			$graph_end = time();
+                  };
+		};
+
+                if(isset($_GET['graph_start'])){
+		  $graph_start = $_GET['graph_start'];
+		} else {
+                  if($rraid == 0){
+                	$graph_start = get_current_graph_start();
+                  } else {
 			$graph_start = $graph_end - db_fetch_cell("SELECT timespan FROM rra WHERE id=" . $rraid);
-                };
+                  };
+		};
+
+		/* required for zoom out function */
+		if ($graph_start == $graph_end) {
+		        $graph_start--;
+		}
 
 		$dss = db_fetch_assoc("
 				SELECT DISTINCT data_template_rrd.data_source_name AS dsname,
