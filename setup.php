@@ -183,8 +183,37 @@ function lookalikee_graph_button($data) {
 
 	if (lookalikee_authorized()){
 		$local_graph_id = $data[1]['local_graph_id'];
-#                var_dump($_POST);
-		print "<a href='" . $config['url_path'] . "plugins/lookalikee/lookalikee.php?local_graph_id=" . $local_graph_id . "'>";
+		$rraid = $data[1]['rra'];
+                $graph_end = 0;
+                $graph_start = 0;
+                if($rraid == 0){
+                	$graph_end = get_current_graph_end();
+                	$graph_start = get_current_graph_start();
+                } else {
+			$graph_end = time();
+			$graph_start = $graph_end - db_fetch_cell("SELECT timespan FROM rra WHERE id=" . $rraid);
+                };
+
+                print("$rraid $graph_start $graph_end <br>");
+
+		$dss = db_fetch_assoc("
+				SELECT DISTINCT data_template_rrd.data_source_name AS dsname,
+						data_template_rrd.local_data_id AS rrdid,
+						data_template_data.data_source_path AS rrdpath
+					FROM
+						graph_templates_graph
+						INNER JOIN graph_templates_item
+							ON graph_templates_graph.local_graph_id=graph_templates_item.local_graph_id
+						INNER JOIN data_template_rrd
+							ON graph_templates_item.task_item_id=data_template_rrd.id
+						INNER JOIN data_template_data
+							ON data_template_rrd.local_data_id=data_template_rrd.local_data_id
+						WHERE graph_templates_graph.local_graph_id = $local_graph_id
+							AND data_template_data.local_data_id = data_template_rrd.local_data_id
+			");
+                #var_dump($dss);
+
+		print "<a href='" . $config['url_path'] . "plugins/lookalikee/lookalikee.php?local_graph_id=" . $local_graph_id . "&graph_start=" . $graph_start . "&graph_end=" . $graph_end . "'>";
 		print "<img alt='Find similar graphs' border='0' style='padding:3px;' src='" . $config['url_path'] . "plugins/lookalikee/lookalikee.gif'>";
 		print "</a><br>";
 	}
