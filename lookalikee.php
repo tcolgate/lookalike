@@ -9,6 +9,10 @@ $lklkbin = read_config_option("lookalikee_binary");
 $local_graph_id = $_GET['local_graph_id'];
 $graph_start = $_GET['graph_start'];
 $graph_end = $_GET['graph_end'];
+$graph_width = read_graph_config_option("default_width");
+$graph_height = read_graph_config_option("default_height");
+$cols = read_graph_config_option("num_columns");
+
 /* required for zoom out function */
 if ($graph_start == $graph_end) {
 	$graph_start--;
@@ -22,6 +26,8 @@ $rrdpath = get_data_source_path($rrdid, true);
 $cmd = "$lklkbin $rrdpath $dsname $graph_start $graph_end";
 exec($cmd, $output);
 
+$currcol = 1;
+print "<table>";
 foreach ($output as $line){
   preg_match("/Match:([^:]*):.*/",$line,$matches);
   if($matches){
@@ -32,7 +38,6 @@ foreach ($output as $line){
     print "matched $rrdbase $data_source_path $dsid<br>";
     $matchedgraphs = api_get_graphs_from_datasource($dsid);
 
-    print "<table>";
     foreach(array_keys($matchedgraphs) as $matchedgraph){
 
 	$graph = db_fetch_row("select
@@ -41,8 +46,8 @@ foreach ($output as $line){
 		from graph_templates_graph
 		where graph_templates_graph.local_graph_id=" . $matchedgraph);
 
-	$graph_height = $graph["height"];
-	$graph_width = $graph["width"];
+#	$graph_height = $graph["height"];
+#	$graph_width = $graph["width"];
         $graph_title = get_graph_title($matchedgraph);
 
 	if ((read_config_option("rrdtool_version")) != "rrd-1.0.x") {
@@ -57,10 +62,12 @@ foreach ($output as $line){
 		}
 	}else {
 		$title_font_size = 0;
-	}
+	};
 
+	if($currcol == 0) {
+          print "<tr>";
+        };
 	?>
-	<tr>
 		<td align='center'>
 			<table width='1' cellpadding='0'>
 				<tr>
@@ -70,15 +77,17 @@ foreach ($output as $line){
 				</tr>
 			</table>
 		</td>
-	</tr>
 	<?php
+	if($currcol == $cols) {
+          print "</tr>";
+          $currcol = 1;
+        } else {
+          $currcol ++;
+        };
     };
-    print "</table>";
-
-  } else {
-    print "$line<br>";
-  };
+  }; 
 };
+print "</table>";
 
 
 include_once($config["base_path"]."/include/bottom_footer.php");
