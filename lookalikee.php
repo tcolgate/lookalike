@@ -49,7 +49,6 @@ foreach ($output as $line){
     $data_source_path = str_replace($rrdbase,'<path_rra>', $matchedrrd);
     $dsquery = "select local_data_id from data_template_data where data_source_path = \"$data_source_path\"";
     $dsid = db_fetch_cell($dsquery);
-    print "matched $rrdbase $data_source_path $dsid<br>";
     $matchedgraphs = api_get_graphs_from_datasource($dsid);
 
     foreach(array_keys($matchedgraphs) as $matchedgraph){
@@ -95,8 +94,6 @@ foreach ($output as $line){
   }; 
 };
 print "</table>";
-var_dump($done);
-
 
 include_once($config["base_path"]."/include/bottom_footer.php");
 
