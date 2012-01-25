@@ -282,10 +282,10 @@ paa_sax(data_t *paa)
 };
 
 char*
-process(data_t *data )
+process(data_t *data, int paasize )
 {
   ts_znormalise(data);
-  data_t *paa = ts_paa(data,10);
+  data_t *paa = ts_paa(data,paasize);
   char *res = paa_sax(paa);
   free(paa->raw);
   free(paa);
@@ -294,6 +294,7 @@ process(data_t *data )
 
 int help_flag = 0;
 char* opt_rraglob = "/var/www/cacti/rra/[0-9]*/*.rrd";
+int   opt_paasize = 10;
 void
 display_help()
 {
@@ -312,10 +313,11 @@ main (int argc, char **argv)
     static struct option long_options[] = {
       {"version"      ,no_argument       ,&help_flag ,  1},
       {"help"         ,no_argument       ,&help_flag ,  1},
-      {"rraglob"      ,required_argument ,0             ,'p'},
+      {"rraglob"      ,required_argument ,0             ,'g'},
+      {"paasize"      ,required_argument ,0             ,'s'},
       {0, 0, 0, 0}
     }; 
-    c = getopt_long (argc,argv,"VHv:h:c:C:e:s:",long_options, &option_index);
+    c = getopt_long (argc,argv,"vhs:g:",long_options, &option_index);
 
     if (c == -1) break;
     
@@ -328,8 +330,12 @@ main (int argc, char **argv)
         help_flag = 1;
         break;
 
-      case 'p':
+      case 'g':
         opt_rraglob = optarg; 
+        break;
+
+      case 's':
+        opt_paasize = atoi(optarg); 
         break;
 
       default: 
@@ -366,9 +372,9 @@ main (int argc, char **argv)
     abort();
   };
 
-  char *srchSax = process(srchData);
+  char *srchSax = process(srchData, opt_paasize);
 
-  printf("Search for time series matching %s...\n",srchSax);
+  printf("Search for time series matching %s using paa size %i...\n",srchSax, opt_paasize);
 
   glob_t filelist;
   filelist.gl_offs = 0;
@@ -383,7 +389,7 @@ main (int argc, char **argv)
     dataset_t *set = fetchrrd(path,srchStart,srchEnd);
     for(f = 0; f < set->count; f++){
        data_t *item = set->items[f];
-       if(!strcmp(process(item),srchSax)){
+       if(!strcmp(process(item,opt_paasize),srchSax)){
          printf("Match:%s:%s\n",item->fromfile,item->name);
          matched++;
        };
