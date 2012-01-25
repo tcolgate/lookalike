@@ -96,6 +96,7 @@ function lookalike_setup_table_new () {
 
 function lookalike_top_graph_header_tabs () {
 	global $config;
+	print '<script language="JavaScript" type="text/javascript" src="' . $config['url_path'] . 'plugins/lookalike/wz_tooltip.js"></script>';
 	echo '<div class="lookalike" id="lookalike" style="width:auto;overflow:hidden;z-index:1010;visibility:hidden;position:absolute;top:0px;left:0px;"></div>';
 }
 
@@ -159,7 +160,6 @@ function lookalike_config_settings () {
 function lookalike_page_head () {
 	global $config;
 
-	print '<script language="JavaScript" type="text/javascript" src="' . $config['url_path'] . 'plugins/lookalike/wz_tooltip.js"></script>';
 }
 
 function lookalike_config_arrays () {
