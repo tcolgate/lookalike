@@ -25,6 +25,7 @@ function plugin_lookalike_install() {
 	api_plugin_register_hook('lookalike', 'graph_buttons_thumbnails', 'lookalike_graph_button',    "setup.php");
 	api_plugin_register_hook('lookalike', 'page_head',                'lookalike_page_head',       "setup.php");
 	api_plugin_register_hook('lookalike', 'top_graph_header_tabs',    'lookalike_top_graph_header_tabs', "setup.php");
+        api_plugin_register_hook('lookalike', 'draw_navigation_text',     'lookalike_draw_navigation_text',  'setup.php');
 
 	lookalike_setup_table_new ();
 }
@@ -92,6 +93,15 @@ function lookalike_check_dependencies() {
 }
 
 function lookalike_setup_table_new () {
+}
+
+function lookalike_draw_navigation_text ($nav) {
+        $nav["lookalike.php:"] = array("title" => "Lookalike", "mapping" => "graph_view.php:tree", "url" => "lookalike.php", "level" => "1");
+        $nav["lookalike.php:"] = array("title" => "Lookalike", "mapping" => "graph_view.php:list", "url" => "lookalike.php", "level" => "1");
+        $nav["lookalike.php:"] = array("title" => "Lookalike", "mapping" => "graph_view.php:preview", "url" => "lookalike.php", "level" => "1");
+        $nav["lookalike.php:"] = array("title" => "Lookalike", "mapping" => "graph.php:view", "url" => "lookalike.php", "level" => "1");
+        $nav["lookalike.php:"] = array("title" => "Lookalike", "mapping" => "graph.php:zoom", "url" => "lookalike.php", "level" => "1");
+	return $nav;
 }
 
 function lookalike_top_graph_header_tabs () {

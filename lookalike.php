@@ -47,8 +47,6 @@ $rrdbase = $config["rra_path"];
 
 $rrdpath = get_data_source_path($rrdid, true);
 $cmd = escapeshellcmd("$lklkbin -g $lklkrrdglob -s $lklkpaasize $rrdpath $dsname $graph_start $graph_end");
-print $cmd . "<br>";
-cacti_log("lookalike exec: $cmd",false,"lookalike");
 exec($cmd, $output);
 
 $currcol = 1;
