@@ -2,13 +2,23 @@
 
 chdir('../../');
 include_once("./include/auth.php");
+include_once("./lib/functions.php");
 include_once("./lib/api_graph.php");
 include_once($config["base_path"]."/include/top_graph_header.php");
 
 $lklkbin = read_config_option("lookalike_binary");
+$lklkrrdglob = read_config_option("lookalike_rrdglob");
+$lklkpaasize = read_config_option("lookalike_filtersize");
+input_validate_input_number($lklkpaasize);
+
 $local_graph_id = $_GET['local_graph_id'];
+input_validate_input_number($local_graph_id);
+
 $graph_start = $_GET['graph_start'];
+input_validate_input_number($graph_start);
 $graph_end = $_GET['graph_end'];
+input_validate_input_number($graph_end);
+
 $graph_width = read_graph_config_option("default_width");
 $graph_height = read_graph_config_option("default_height");
 $cols = read_graph_config_option("num_columns");
@@ -36,7 +46,9 @@ $rrdbase = $config["rra_path"];
 
 
 $rrdpath = get_data_source_path($rrdid, true);
-$cmd = "$lklkbin $rrdpath $dsname $graph_start $graph_end";
+$cmd = escapeshellcmd("$lklkbin -g $lklkrrdglob -s $lklkpaasize $rrdpath $dsname $graph_start $graph_end");
+print $cmd . "<br>";
+cacti_log("lookalike exec: $cmd",false,"lookalike");
 exec($cmd, $output);
 
 $currcol = 1;
