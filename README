@@ -2,4 +2,9 @@ lookalike is a cacti plugin for searching for graphs that
 look similar to a graph that you are currently viewing.
 It is loosely based on the techniques used in the SAX time
 series indexing suite. The plugin itself is based on code
-from the Spike Kill plugin
+from the Spike Kill plugin by the Cacti Group, the graph icon 
+is adapted from a thold plugin image by Jimmy Connor.
+
+This plugin makes use of wz_toolip.js which by Walter Zorn.
+
+
