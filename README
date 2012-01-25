@@ -1,3 +1,4 @@
+
 lookalike is a cacti plugin for searching for graphs that 
 look similar to a graph that you are currently viewing.
 It is loosely based on the techniques used in the SAX time
@@ -7,4 +8,30 @@ is adapted from a thold plugin image by Jimmy Connor.
 
 This plugin makes use of wz_toolip.js which by Walter Zorn.
 
+Installation
+------------
 
+1. Copy the plugin into your cacti plugins folder.
+
+2. You will need to build the lookalike binary. This 
+  requires, librrd developement libraries, and the gnu
+  getopt headers.
+
+  # yum install glibc-headers rrdtool-devel
+  # cd bin
+  # make
+
+3. You will need to ensure that php will have permissions
+  to execute the binary. The location of the binary can
+  be changed and is configurable in the plugin's settings.
+
+4. Install and activate the plugin through cacti plugin
+  management.
+
+5. Allow users to use the plugin via cacti user management.
+
+Support
+-------
+
+  Please visit the homepage:
+  https://github.com/tcolgate/lookalike
