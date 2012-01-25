@@ -5,7 +5,7 @@ include_once("./include/auth.php");
 include_once("./lib/api_graph.php");
 include_once($config["base_path"]."/include/top_graph_header.php");
 
-$lklkbin = read_config_option("lookalikee_binary");
+$lklkbin = read_config_option("lookalike_binary");
 $local_graph_id = $_GET['local_graph_id'];
 $graph_start = $_GET['graph_start'];
 $graph_end = $_GET['graph_end'];

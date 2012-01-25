@@ -1,5 +1,5 @@
-all: lookalikee
+all: lookalike
 
-lookalikee: lookalikee.c
-	gcc -o lookalikee -O2 -Wall -Wextra -std=c99 -lrrd ./lookalikee.c 
+lookalike: lookalike.c
+	gcc -o lookalike -O2 -Wall -Wextra -std=c99 -lrrd ./lookalike.c 
 
