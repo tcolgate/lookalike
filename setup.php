@@ -96,11 +96,7 @@ function lookalike_setup_table_new () {
 }
 
 function lookalike_draw_navigation_text ($nav) {
-        $nav["lookalike.php:"] = array("title" => "Lookalike", "mapping" => "graph_view.php:tree", "url" => "lookalike.php", "level" => "1");
-        $nav["lookalike.php:"] = array("title" => "Lookalike", "mapping" => "graph_view.php:list", "url" => "lookalike.php", "level" => "1");
-        $nav["lookalike.php:"] = array("title" => "Lookalike", "mapping" => "graph_view.php:preview", "url" => "lookalike.php", "level" => "1");
-        $nav["lookalike.php:"] = array("title" => "Lookalike", "mapping" => "graph.php:view", "url" => "lookalike.php", "level" => "1");
-        $nav["lookalike.php:"] = array("title" => "Lookalike", "mapping" => "graph.php:zoom", "url" => "lookalike.php", "level" => "1");
+        $nav['lookalike.php:'] = array('title' => 'Lookalike', 'mapping' => '', 'url' => 'lookalike.php', 'level' => '1');
 	return $nav;
 }
 
