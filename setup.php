@@ -234,7 +234,7 @@ function lookalike_graph_button($data) {
 		};
                 $tip = "'<div class=\'lookalike\'>" . $menu . "</div>', FIX, [this, 18, -18], STICKY, true, BORDERWIDTH, 0, BGCOLOR, '#F1F1F1', CLICKCLOSE, true, CLICKSTICKY, true, SHADOW, true, PADDING, 0, TITLE, 'Find Similar Graphs', TITLEFONTSIZE, '6pt', TITLEBGCOLOR, '#6D88AD', DURATION, -10000";
 
-		print "<img alt='Find graphs similar to...' border='0' id='lklk" . $local_graph_id . "' style='padding:3px;' src='" . $config['url_path'] . "plugins/lookalike/lookalike.gif' onMouseOver=\"Tip($tip)\" onMouseOut='UnTip()'><br>";
+		print "<img alt='Find graphs similar to...' border='0' id='lklk" . $local_graph_id . "' style='padding:3px;' src='" . $config['url_path'] . "plugins/lookalike/lookalike.png' onMouseOver=\"Tip($tip)\" onMouseOut='UnTip()'><br>";
 
 	}
 }
