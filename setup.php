@@ -138,13 +138,13 @@ function lookalike_config_settings () {
 			"default" => "/var/www/cacti/plugins/lookalike/bin/lookalike",
 			"max_length" => "255",
 			),
-		"lookalike_rrdglob" => array(
-			"friendly_name" => "RRD Pattern",
-			"description" => "A glob describing the RRDs to search",
-			"method" => "textbox",
-          		"default" => "<path_rra>/[0-9]*/*.rrd",
-			"max_length" => "255",
-			"size" => "60"
+		"lookalike_rrdglobs" => array(
+			"friendly_name" => "RRD Patterns",
+			"description" => "Globs describing the RRDs to search paths",
+            "method" => "textarea",
+            "textarea_rows" => "6",
+            "textarea_cols" => "80",
+          	"default" => "<path_rra>/*.rrd\n<path_rra>/[0-9]*/*.rrd",
 			),
 		"lookalike_filtersize" => array(
 			"friendly_name" => "Filter Size",

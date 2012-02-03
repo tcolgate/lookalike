@@ -30,8 +30,8 @@ $dsname = $_GET['dsname'];
 $rrdbase = $config["rra_path"];
 
 $lklkbin = read_config_option("lookalike_binary");
-$lklkrrdglob = read_config_option("lookalike_rrdglob");
-$lklkrrdglob = str_replace('<path_rra>',$rrdbase, $lklkrrdglob);
+$lklkrrdglobs = read_config_option("lookalike_rrdglobs");
+$lklkrrdglobs = str_replace('<path_rra>',$rrdbase, $lklkrrdglob);
 
 $lklkpaasize = read_config_option("lookalike_filtersize");
 input_validate_input_number($lklkpaasize);
@@ -67,7 +67,10 @@ if ($graph_start == $graph_end) {
 }
 
 $rrdpath = get_data_source_path($rrdid, true);
-$cmd = escapeshellcmd("$lklkbin -g $lklkrrdglob -s $lklkpaasize $rrdpath $dsname $graph_start $graph_end");
+$lklkglobopts = explode("\n",$lklkrrdglobs);
+$lklkglobopts = implode(" -g ",$lklkglobopts);
+$cmd = escapeshellcmd("$lklkbin -g $lklkglobopts -s $lklkpaasize $rrdpath $dsname $graph_start $graph_end");
+print_r "$cmd <br>";
 exec($cmd, $output);
 
 $currcol = 1;

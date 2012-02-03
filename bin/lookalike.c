@@ -292,9 +292,11 @@ process(data_t *data, int paasize )
   return res;
 };
 
-int help_flag = 0;
-char* opt_rraglob = "/var/www/cacti/rra/[0-9]*/*.rrd";
-int   opt_paasize = 10;
+int    help_flag = 0;
+int    opt_rraglob_count = 0;
+char** opt_rraglobs = NULL;
+int    opt_paasize = 10;
+
 void
 display_help()
 {
@@ -331,7 +333,9 @@ main (int argc, char **argv)
         break;
 
       case 'g':
-        opt_rraglob = optarg; 
+        opt_rraglob_count++;
+        opt_rraglobs = (char**) realloc(opt_rraglobs,sizeof(char*) * opt_rraglob_count);
+        opt_rraglobs[opt_rraglob_count - 1] = optarg; 
         break;
 
       case 's':
@@ -374,31 +378,42 @@ main (int argc, char **argv)
 
   char *srchSax = process(srchData, opt_paasize);
 
+
+  if (opt_rraglob_count == 0){
+    opt_rraglob_count++;
+    opt_rraglobs = (char**) realloc (opt_rraglobs, sizeof(char*) * opt_rraglob_count);
+    opt_rraglobs[opt_rraglob_count - 1] = "/var/www/cacti/rra/[0-9]*/*.rrd"; 
+  };
+
   printf("Search for time series matching %s using paa size %i...\n",srchSax, opt_paasize);
 
-  glob_t filelist;
-  filelist.gl_offs = 0;
-  if(glob(opt_rraglob,0,NULL,&filelist)){
-      return 1;
-  };
-
-  char **paths = NULL;
-  for(paths = filelist.gl_pathv;*paths != NULL; paths++){
-    char *path = *paths;
-    int f;
-    dataset_t *set = fetchrrd(path,srchStart,srchEnd);
-    for(f = 0; f < set->count; f++){
-       data_t *item = set->items[f];
-       if(!strcmp(process(item,opt_paasize),srchSax)){
-         printf("Match:%s:%s\n",item->fromfile,item->name);
-         matched++;
-       };
-       processed++;
-       free(set->items[f]->raw);
-       free(set->items[f]);
+  int checkglob;
+  for(checkglob = 0; checkglob < opt_rraglob_count; checkglob++){
+    printf("Search %s\n", opt_rraglobs[checkglob]);
+    glob_t filelist;
+    filelist.gl_offs = 0;
+    if(glob(opt_rraglobs[checkglob],0,NULL,&filelist)){
+      break;
     };
-  };
 
+    char **paths = NULL;
+    for(paths = filelist.gl_pathv;*paths != NULL; paths++){
+      char *path = *paths;
+      int f;
+      dataset_t *set = fetchrrd(path,srchStart,srchEnd);
+      for(f = 0; f < set->count; f++){
+        data_t *item = set->items[f];
+        if(!strcmp(process(item,opt_paasize),srchSax)){
+          printf("Match:%s:%s\n",item->fromfile,item->name);
+          matched++;
+        };
+        processed++;
+        free(set->items[f]->raw);
+        free(set->items[f]);
+      };
+    };
+
+  };
   printf("Processed %i RRAs\n",processed);
   printf("Matched %i RRAs\n",matched);
 
