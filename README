@@ -28,7 +28,13 @@ Installation
 4. Install and activate the plugin through cacti plugin
   management.
 
-5. Allow users to use the plugin via cacti user management.
+5. Check the plugin setting in Console->Settings->Misc. The
+  RRD Path will need to match all the RRD files you want to 
+  search. The most common settings will be...
+  - <rra_path>/*.rrd
+  - <rra_path>/[0-9]*/*.rrd
+
+6. Allow users to use the plugin via cacti user management.
 
 Support
 -------
