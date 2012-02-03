@@ -25,8 +25,14 @@ include_once("./lib/functions.php");
 include_once("./lib/api_graph.php");
 include_once($config["base_path"]."/include/top_graph_header.php");
 
+$rrdid = $_GET['rrdid'];
+$dsname = $_GET['dsname'];
+$rrdbase = $config["rra_path"];
+
 $lklkbin = read_config_option("lookalike_binary");
 $lklkrrdglob = read_config_option("lookalike_rrdglob");
+$lklkrrdglob = str_replace('<path_rra>',$rrdbase, $lklkrrdglob);
+
 $lklkpaasize = read_config_option("lookalike_filtersize");
 input_validate_input_number($lklkpaasize);
 
@@ -59,10 +65,6 @@ if ((read_config_option("rrdtool_version")) != "rrd-1.0.x") {
 if ($graph_start == $graph_end) {
 	$graph_start--;
 }
-$rrdid = $_GET['rrdid'];
-$dsname = $_GET['dsname'];
-$rrdbase = $config["rra_path"];
-
 
 $rrdpath = get_data_source_path($rrdid, true);
 $cmd = escapeshellcmd("$lklkbin -g $lklkrrdglob -s $lklkpaasize $rrdpath $dsname $graph_start $graph_end");

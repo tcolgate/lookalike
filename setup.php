@@ -142,7 +142,7 @@ function lookalike_config_settings () {
 			"friendly_name" => "RRD Pattern",
 			"description" => "A glob describing the RRDs to search",
 			"method" => "textbox",
-            "default" => "/var/www/cacti/rra/[0-9]*/*.rrd",
+          		"default" => "<path_rra>/[0-9]*/*.rrd",
 			"max_length" => "255",
 			"size" => "60"
 			),
