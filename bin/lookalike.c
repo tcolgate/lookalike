@@ -256,7 +256,7 @@ ts_paa(data_t *data, int paasize )
 };
 
 double saxbreaks8val[7] = { -1.5, -0.67, -0.32 ,0.0 ,0.32 ,0.67 ,1.5 };
-char saxbreaks8code[9] = { 'a', 'b', 'c' , 'd' , 'e' , 'f' , 'g' , 'h', 'i' };
+char saxbreaks8code[9] = { 'a', 'b', 'c' , 'd' , 'e' , 'f' , 'g' , 'h' };
 char*
 paa_sax(data_t *paa)
 {
@@ -273,8 +273,7 @@ paa_sax(data_t *paa)
     x >= saxbreaks8val[3] && x < saxbreaks8val[4] ? saxbreaks8code[4] :
     x >= saxbreaks8val[4] && x < saxbreaks8val[5] ? saxbreaks8code[5] :
     x >= saxbreaks8val[5] && x < saxbreaks8val[6] ? saxbreaks8code[6] :
-    x >= saxbreaks8val[6] && x < saxbreaks8val[7] ? saxbreaks8code[7] :
-    x >= saxbreaks8val[7] ? saxbreaks8code[8] : 'X';
+    x >= saxbreaks8val[6] ? saxbreaks8code[7] : 'X';
   };
   res[paa->size] = 0;
 
