@@ -36,6 +36,13 @@ Installation
 
 6. Allow users to use the plugin via cacti user management.
 
+ScreenShots
+-----------
+
+![Image of Selection](screenshot1.png)
+
+![Image of Result](screenshot2.png)
+
 Support
 -------
 
